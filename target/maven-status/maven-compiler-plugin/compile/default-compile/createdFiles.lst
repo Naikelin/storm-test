@@ -1,0 +1,4 @@
+io/koszolko/storm/example/WordCountTopology.class
+io/koszolko/storm/example/WordCountBolt.class
+io/koszolko/storm/example/RandomSentenceSpout.class
+io/koszolko/storm/example/SplitBolt.class
