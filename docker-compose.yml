@@ -1,59 +1,54 @@
 version: '3.1'
-
 services:
-    zookeeper:
-        image: zookeeper
-        container_name: zookeeper
-        restart: always
+  zookeeper:
+    image: zookeeper
+    container_name: zookeeper
+    restart: always
+    
+  nimbus:
+    build: .
+    container_name: nimbus
+    command: storm nimbus
+    depends_on:
+        - zookeeper
+    links:
+        - zookeeper
+    restart: always
+    ports:
+        - 6627:6627
+  supervisor:
+    build: .
+    container_name: supervisor
+    command: storm supervisor
+    depends_on:
+        - nimbus
+        - zookeeper
+    links:
+        - nimbus
+        - zookeeper
+    restart: always
 
-    nimbus:
-        image: storm
-        container_name: nimbus
-        command: storm nimbus
-        depends_on:
-            - zookeeper
-        links:
-            - zookeeper
-        restart: always
-        ports:
-            - 6627:6627
-        volumes:
-            - ./confs/nimbus/:/conf
+  ui:
+    build: .
+    container_name: ui
+    command: storm ui
+    depends_on:
+        - nimbus
+    links:
+        - nimbus
+    restart: always
+    ports:
+        - 8080:8080
 
-    supervisor:
-        image: storm
-        container_name: supervisor
-        command: storm supervisor
-        depends_on:
-            - nimbus
-            - zookeeper
-        links:
-            - nimbus
-            - zookeeper
-        restart: always
-        volumes:
-            - ./confs/supervisor:/conf
 
-    ui:
-        image: storm
-        container_name: ui
-        command: storm ui
-        depends_on:
-            - nimbus
-        links:
-            - nimbus
-        restart: always
-        ports:
-            - 8080:8080
-
-    storm-delpoy-topology:
-        image: storm
-        container_name: storm-delpoy-topology
-        command: /topology-deployment-scripts/deploy-topology.sh
-        depends_on:
-            - nimbus
-        links:
-            - nimbus
-        volumes:
-            - ./topology-deployment-scripts:/topology-deployment-scripts
-            - ./target:/topology
+  storm-delpoy-topology:
+    image: storm
+    container_name: storm-delpoy-topology
+    command: /topology-deployment-scripts/deploy-topology.sh
+    depends_on:
+        - nimbus
+    links:
+        - nimbus
+    volumes:
+        - ./topology-deployment-scripts:/topology-deployment-scripts
+        - ./storm-starter/target:/topology
