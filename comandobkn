@@ -1,0 +1,1 @@
+docker run -network storm-test_default -v $PWD/storm-starter/target:/topology -it storm jar /topology/storm-starter-2.4.0.jar org.apache.storm.starter.RollingTopWords topology

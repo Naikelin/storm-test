@@ -1,8 +1,8 @@
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/bolt/IntermediateRankingsBoltTest.java
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/tools/RankableObjectWithFieldsTest.java
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/tools/SlotBasedCounterTest.java
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/bolt/RollingCountBoltTest.java
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/tools/SlidingWindowCounterTest.java
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/tools/RankingsTest.java
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/bolt/TotalRankingsBoltTest.java
-/home/jpbrione/Projects/research/mine/storm-starter/test/jvm/org/apache/storm/starter/tools/NthLastModifiedTimeTrackerTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/tools/SlidingWindowCounterTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/tools/RankableObjectWithFieldsTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/bolt/TotalRankingsBoltTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/bolt/IntermediateRankingsBoltTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/tools/SlotBasedCounterTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/tools/RankingsTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/tools/NthLastModifiedTimeTrackerTest.java
+/home/nk/storm-test/storm-starter/test/jvm/org/apache/storm/starter/bolt/RollingCountBoltTest.java

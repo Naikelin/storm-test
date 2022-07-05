@@ -4,7 +4,6 @@ services:
     image: zookeeper
     container_name: zookeeper
     restart: always
-    
   nimbus:
     build: .
     container_name: nimbus
@@ -16,6 +15,8 @@ services:
     restart: always
     ports:
         - 6627:6627
+    volumes:
+        - "/home/nk/storm-test/topology-deployment-files:/topology"
   supervisor:
     build: .
     container_name: supervisor
@@ -27,7 +28,8 @@ services:
         - nimbus
         - zookeeper
     restart: always
-
+    volumes:
+        - "/home/nk/storm-test/topology-deployment-files:/topology"
   ui:
     build: .
     container_name: ui
@@ -39,16 +41,3 @@ services:
     restart: always
     ports:
         - 8080:8080
-
-
-  storm-delpoy-topology:
-    image: storm
-    container_name: storm-delpoy-topology
-    command: /topology-deployment-scripts/deploy-topology.sh
-    depends_on:
-        - nimbus
-    links:
-        - nimbus
-    volumes:
-        - ./topology-deployment-scripts:/topology-deployment-scripts
-        - ./storm-starter/target:/topology

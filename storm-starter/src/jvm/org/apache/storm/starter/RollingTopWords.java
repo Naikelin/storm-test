@@ -12,10 +12,21 @@
 
 package org.apache.storm.starter;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import org.apache.storm.starter.bolt.IntermediateRankingsBolt;
 import org.apache.storm.starter.bolt.RollingCountBolt;
 import org.apache.storm.starter.bolt.TotalRankingsBolt;
-import org.apache.storm.testing.TestWordSpout;
+import org.apache.storm.starter.spout.RawInputFromCSVSpout;
 import org.apache.storm.topology.ConfigurableTopology;
 import org.apache.storm.topology.TopologyBuilder;
 import org.apache.storm.tuple.Fields;
@@ -59,17 +70,21 @@ public class RollingTopWords extends ConfigurableTopology {
      *          locally ("-local") or remotely, i.e. on a real cluster.
      */
     @Override
-    protected int run(String[] args) {
+    protected int run(String[] args) throws FileNotFoundException {
+        File file = new File("/topology/test.csv");
+        List<String> outputFields = Arrays.asList("words");
+
         String topologyName = "slidingWindowCounts";
         if (args.length >= 1) {
             topologyName = args[0];
         }
         TopologyBuilder builder = new TopologyBuilder();
-        String spoutId = "wordGenerator";
+        String spoutId = "wordsFromRawCSV";
         String counterId = "counter";
         String intermediateRankerId = "intermediateRanker";
-        builder.setSpout(spoutId, new TestWordSpout(), 5);
-        builder.setBolt(counterId, new RollingCountBolt(9, 3), 4).fieldsGrouping(spoutId, new Fields("word"));
+
+        builder.setSpout(spoutId, new RawInputFromCSVSpout(file, outputFields), 5);
+        builder.setBolt(counterId, new RollingCountBolt(9, 3), 4).fieldsGrouping(spoutId, new Fields("words"));
         builder.setBolt(intermediateRankerId, new IntermediateRankingsBolt(TOP_N), 4).fieldsGrouping(counterId,
                                                                                                      new Fields("obj"));
         String totalRankerId = "finalRanker";
