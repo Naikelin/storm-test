@@ -18,6 +18,7 @@ storm.log.dir: "$STORM_LOG_DIR"
 storm.local.dir: "$STORM_DATA_DIR"
 storm.local.hostname: "$(hostname -I | tr -d ' ')"
     
+topology.debug: true
 EOF
 fi
 
